@@ -23,5 +23,5 @@ repos:
     -   id: poetry-lock # make sure the lock file is up to date
         stages: ["push"]
     -   id: poetry-export # export requirements.txt
-        args: ["-f", "requirements.txt"]
+        args: ["-o", "requirements.txt"]
         stages: ["push"]
