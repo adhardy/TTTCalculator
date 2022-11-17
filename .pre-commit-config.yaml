@@ -15,13 +15,13 @@ repos:
     hooks:
     -   id: flake8
     
--   repo: https://github.com/python-poetry/poetry
-    rev: '1.2.0rc1' # need a recent version for pre-commit to work
-    hooks:
-    -   id: poetry-check # validate pyproject.toml
-        stages: ["push"]
-    -   id: poetry-lock # make sure the lock file is up to date
-        stages: ["push"]
-    -   id: poetry-export # export requirements.txt
-        args: ["-o", "requirements.txt", "-f", "requirements.txt"]
-        stages: ["push"]
+# -   repo: https://github.com/python-poetry/poetry
+#     rev: '1.2.0rc1' # need a recent version for pre-commit to work
+#     hooks:
+#     -   id: poetry-check # validate pyproject.toml
+#         stages: ["push"]
+#     -   id: poetry-lock # make sure the lock file is up to date
+#         stages: ["push"]
+#     -   id: poetry-export # export requirements.txt
+#         args: ["-o", "requirements.txt", "-f", "requirements.txt"]
+#         stages: ["push"]
