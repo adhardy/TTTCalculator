@@ -16,7 +16,7 @@ repos:
     -   id: flake8
     
 -   repo: https://github.com/python-poetry/poetry
-    rev: '1.2.0' # need a recent version for pre-commit to work
+    rev: '1.2.0rc1' # need a recent version for pre-commit to work
     hooks:
     -   id: poetry-check # validate pyproject.toml
         stages: ["push"]
