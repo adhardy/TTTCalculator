@@ -1,5 +1,6 @@
-from typing import Optional
 from dataclasses import dataclass
+from typing import Optional
+
 import streamlit as st
 
 from tttcalculator.riders import Riders
@@ -75,8 +76,16 @@ def rider_form_layout(riders: Riders):
 
     columns = Columns()
     # these need to correspond to the Rider dataclass
-    columns.append(Column(name="number", type=int, label="Rider Number", width=0.8))
-    columns.append(Column(name="name", type=str, label="Name", width=2))
+    columns.append(Column(name="name", type=str, label="Name", width=2, help="Rider name."))
+    columns.append(
+        Column(
+            name="power",
+            type=int,
+            label="40 Min. Power (W)",
+            width=1,
+            help="40 minute power in Watts. Can be found from the graph in the 'power' tab of the riders profile on zwiftpower.com",  # noqa: E501
+        )
+    )
     columns.append(
         Column(
             name="weight",
@@ -86,49 +95,35 @@ def rider_form_layout(riders: Riders):
             help="Rider weight in kg, only needed for 'hilly' courses",
         )
     )
-    columns.append(Column(name="power", type=int, label="40 Min. Power (W)", width=1))
-
     with st.form("rider_data"):
-        st.header("Rider Data")
-        cols = st.columns(columns.widths)
-
-        for col_name, col_type, col_label, col_idx, col_help in columns.iteritems():
-            cols[col_idx].write(col_label)
-
-            for rider in riders:
-                if col_name == "number":
-                    cols[col_idx].text_input(
-                        col_label,
-                        key=f"{col_name}_{rider.number}",
-                        label_visibility="collapsed",
-                        placeholder=rider.number + 1,
-                        disabled=True,
-                        help=col_help,
-                    )
-                else:
-                    if col_type == int:
-                        _val = cols[col_idx].number_input(
-                            col_label,
-                            key=f"{col_name}_{rider.number}",
-                            label_visibility="collapsed",
-                            step=1,
-                            min_value=0,
-                        )
-                    elif col_type == float:
-                        _val = cols[col_idx].number_input(
-                            col_label,
-                            key=f"{col_name}_{rider.number}",
-                            label_visibility="collapsed",
-                            step=0.1,
-                            min_value=0,
-                        )
-                    elif col_type == str:
-                        _val = cols[col_idx].text_input(
-                            col_label, key=f"{col_name}_{rider.number}", label_visibility="collapsed"
-                        )
+        for rider in riders:
+            with st.expander(f"Rider {rider.number+1}:", expanded=True):
+                cols = st.columns(columns.widths)
+                for col_name, col_type, col_label, col_idx, col_help in columns.iteritems():
+                    if col_name == "number":
+                        pass
                     else:
-                        raise ValueError(f"Column type {col_type} not supported")
+                        if col_type == int:
+                            _val = cols[col_idx].number_input(
+                                col_label,
+                                key=f"{col_name}_{rider.number}",
+                                min_value=0,
+                                step=1,
+                                help=col_help,
+                            )
+                        elif col_type == float:
+                            _val = cols[col_idx].number_input(
+                                col_label,
+                                key=f"{col_name}_{rider.number}",
+                                step=0.1,
+                                min_value=0,
+                                help=col_help,
+                            )
+                        elif col_type == str:
+                            _val = cols[col_idx].text_input(col_label, key=f"{col_name}_{rider.number}", help=col_help)
+                        else:
+                            raise ValueError(f"Column type {col_type} not supported")
 
-                    rider.__setattr__(col_name, _val)
+                        rider.__setattr__(col_name, _val)
 
         return st.form_submit_button("Submit")

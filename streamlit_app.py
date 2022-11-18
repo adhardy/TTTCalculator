@@ -12,6 +12,7 @@ def main():
         page_title="VCRT TTT Calculator",
         page_icon="resources/vcrt_favicon.jfif",
         initial_sidebar_state="expanded",
+        layout="wide",
     )
 
     st.image("resources/vcrt.webp", width=200)
