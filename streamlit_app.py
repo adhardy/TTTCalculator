@@ -13,6 +13,9 @@ def main():
         page_icon="resources/vcrt_favicon.jfif",
         initial_sidebar_state="expanded",
         layout="wide",
+        menu_items={
+            "about": "Credit to James Young for the original excel version of this.\n\nMore about VCRT: https://www.vcrt.org.uk",  # noqa: E501
+        },
     )
 
     st.image("resources/vcrt.webp", width=200)
