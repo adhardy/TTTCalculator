@@ -82,11 +82,12 @@ def _turn_lengths(
     riders: Riders,
     st=st,
 ):
+    st.header("Turn Lengths")
 
     # round turn lengths to nearest 5 seconds
     turn_lengths = [int(round(turn_length / 5) * 5) for turn_length in turn_lengths]
+    st.caption("Target turn lengths for each rider, rounded to the nearest 5 seconds")
 
-    st.header("Turn Lengths")
     turn_length_data = defaultdict(list)
     for rider, turn_length in zip(riders, turn_lengths):
         turn_length_data["Number"].append(rider.number + 1)
@@ -121,6 +122,7 @@ def _target_power(
     st=st,
 ):
     st.header(f"Target {power_unit}")
+    st.caption("Target power for the rider at the front of the group. As riders drop off, target power decreases.")
 
     number_riders = range(len(power_min), 0, -1)
     power_min_str = [float_formatter(power) for power in power_min]
