@@ -131,9 +131,11 @@ def _target_power(
     # select only rows where rider number is less than or equal to the number of riders
     power_multipliers = power_multipliers[power_multipliers.index <= num_riders]
     s_power_max = average_power * power_multipliers
+    s_power_max = s_power_max.apply(lambda x: int(round(x / 5) * 5))
     s_power_max.name = "Max"
     s_power_max = s_power_max.apply(float_formatter)
     s_power_min = second_average_power * power_multipliers
+    s_power_min = s_power_min.apply(lambda x: int(round(x / 5) * 5))
     s_power_min.name = "Min"
     s_power_min = s_power_min.apply(float_formatter)
 
