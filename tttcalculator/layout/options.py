@@ -1,5 +1,6 @@
 import streamlit as st
-from tttcalculator.utils import Options, ReferenceMetric, PleasureIndex
+
+from tttcalculator.utils import Options, PleasureIndex, ReferenceMetric
 
 
 def options_layout():

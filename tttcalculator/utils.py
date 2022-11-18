@@ -1,7 +1,8 @@
+import io
 from dataclasses import dataclass
 from enum import Enum
 from pkgutil import get_data
-import io
+
 import pandas as pd
 
 

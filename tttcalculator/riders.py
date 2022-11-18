@@ -1,6 +1,8 @@
-from typing import Optional
 from dataclasses import dataclass
+from typing import Optional
+
 import numpy as np
+
 from tttcalculator.utils import ReferenceMetric
 
 

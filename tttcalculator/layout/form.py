@@ -1,5 +1,6 @@
-from typing import Optional
 from dataclasses import dataclass
+from typing import Optional
+
 import streamlit as st
 
 from tttcalculator.riders import Riders

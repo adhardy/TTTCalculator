@@ -1,12 +1,12 @@
-import streamlit as st
+from collections import defaultdict
+from typing import Callable
+
 import numpy as np
 import pandas as pd
-from tttcalculator.riders import Riders
-from tttcalculator.utils import ReferenceMetric, PleasureIndex
-from typing import Callable
-from collections import defaultdict
+import streamlit as st
 
-# pands: format float as .0f
+from tttcalculator.riders import Riders
+from tttcalculator.utils import PleasureIndex, ReferenceMetric
 
 
 def results_layout(
