@@ -83,13 +83,13 @@ def _turn_lengths(
 
     # round turn lengths to nearest 5 seconds
     turn_lengths = [int(round(turn_length / 5) * 5) for turn_length in turn_lengths]
-    st.caption("Target turn lengths for each rider, rounded to the nearest 5 seconds")
+    st.caption("Target turn lengths for each rider, rounded to the nearest 5 seconds.")
 
     turn_length_data = defaultdict(list)
     for rider, turn_length in zip(riders, turn_lengths):
         turn_length_data["Number"].append(rider.number + 1)
         turn_length_data["Rider"].append(rider.name)
-        turn_length_data["Turn Length"].append(int(turn_length))
+        turn_length_data["Turn Length (s)"].append(int(turn_length))
         turn_length_data[f"40 min. Power ({power_unit})"].append(
             float_formatter(getattr(rider, reference_metric.name.lower()))
         )
@@ -123,7 +123,7 @@ def _target_power(
     second_average_power: float,
     st=st,
 ):
-    st.header(f"Target {power_unit}")
+    st.header("Target Power")
     st.caption("Target power for the rider at the front of the group. As riders drop off, target power decreases.")
 
     # read the power multipluers csv and get the right column for the pleasure index
@@ -132,11 +132,11 @@ def _target_power(
     power_multipliers = power_multipliers[power_multipliers.index <= num_riders]
     s_power_max = average_power * power_multipliers
     s_power_max = s_power_max.apply(lambda x: int(round(x / 5) * 5))
-    s_power_max.name = "Max"
+    s_power_max.name = f"Max ({power_unit})"
     s_power_max = s_power_max.apply(float_formatter)
     s_power_min = second_average_power * power_multipliers
     s_power_min = s_power_min.apply(lambda x: int(round(x / 5) * 5))
-    s_power_min.name = "Min"
+    s_power_min.name = f"Min ({power_unit})"
     s_power_min = s_power_min.apply(float_formatter)
 
     df_power = pd.merge(

@@ -78,20 +78,20 @@ def rider_form_layout(riders: Riders):
     columns.append(Column(name="name", type=str, label="Name", width=2, help="Rider name."))
     columns.append(
         Column(
-            name="weight",
-            type=int,
-            label="Weight (kg)",
-            width=1,
-            help="Rider weight in kg, only needed for 'hilly' courses",
-        )
-    )
-    columns.append(
-        Column(
             name="power",
             type=int,
             label="40 Min. Power (W)",
             width=1,
             help="40 minute power in Watts. Can be found from the graph in the 'power' tab of the riders profile on zwiftpower.com",  # noqa: E501
+        )
+    )
+    columns.append(
+        Column(
+            name="weight",
+            type=int,
+            label="Weight (kg)",
+            width=1,
+            help="Rider weight in kg, only needed for 'hilly' courses",
         )
     )
     with st.form("rider_data"):
