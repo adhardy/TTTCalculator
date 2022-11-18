@@ -1,5 +1,8 @@
 from dataclasses import dataclass
 from enum import Enum
+from pkgutil import get_data
+import io
+import pandas as pd
 
 
 class ReferenceMetric(Enum):
@@ -16,9 +19,9 @@ class PleasureIndex(Enum):
     enum for pleasure index
     """
 
-    EASY = 1, "I'm a pussy", 1.25
-    MEDIUM = 2, "Go on then", 1.3
-    HARD = 3, "Come at me bro", 1.35
+    EASY = 1, "Easy"
+    MEDIUM = 2, "Medium"
+    HARD = 3, "Hard"
 
 
 @dataclass
@@ -28,3 +31,7 @@ class Options:
     target_turn_length: int = 30
     reference_power_scale = 3
     pleasure_index = PleasureIndex.MEDIUM
+
+    def __post_init__(self):
+        power_muliplier_data = get_data("tttcalculator", "data/power_multiplier.csv")
+        self.power_multiplier_data = pd.read_csv(io.BytesIO(power_muliplier_data), index_col=0)
