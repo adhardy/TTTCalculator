@@ -80,7 +80,7 @@ def rider_form_layout(riders: Riders):
     columns.append(
         Column(
             name="weight",
-            type=float,
+            type=int,
             label="Weight (kg)",
             width=1,
             help="Rider weight in kg, only needed for 'hilly' courses",
@@ -108,11 +108,19 @@ def rider_form_layout(riders: Riders):
                 else:
                     if col_type == int:
                         _val = cols[col_idx].number_input(
-                            col_label, key=f"{col_name}_{rider.number}", label_visibility="collapsed", step=1
+                            col_label,
+                            key=f"{col_name}_{rider.number}",
+                            label_visibility="collapsed",
+                            step=1,
+                            min_value=0,
                         )
                     elif col_type == float:
                         _val = cols[col_idx].number_input(
-                            col_label, key=f"{col_name}_{rider.number}", label_visibility="collapsed", step=0.1
+                            col_label,
+                            key=f"{col_name}_{rider.number}",
+                            label_visibility="collapsed",
+                            step=0.1,
+                            min_value=0,
                         )
                     elif col_type == str:
                         _val = cols[col_idx].text_input(

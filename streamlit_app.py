@@ -42,6 +42,7 @@ def main():
         reference_power_scale=options.reference_power_scale,
         target_turn_length=options.target_turn_length,
         pleasure_index=options.pleasure_index,
+        power_multiplier_data=options.power_multiplier_data,
     )
 
 

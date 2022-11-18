@@ -132,7 +132,9 @@ class Riders:
 
         att_values = self.get_rider_attribute(attr)
 
-        return np.std(att_values)
+        return (
+            np.std(att_values, ddof=1) / 2
+        )  # ddof=1 for sample stddev (match excel), /2 matches the TTT original calculator
 
     def sec_average(self, attr: str):
 
