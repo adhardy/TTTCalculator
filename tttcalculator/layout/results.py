@@ -9,6 +9,22 @@ from tttcalculator.riders import Riders
 from tttcalculator.utils import PleasureIndex, ReferenceMetric
 
 
+def nearest_int(x: float, round_to: int = 1) -> int:
+    return int(nearest_float(x, round_to))
+
+
+def nearest_float(x: float, round_to: float = 1) -> float:
+    return round(x / round_to) * round_to
+
+
+def nearest_five(x: float) -> int:
+    return nearest_int(x, round_to=5)
+
+
+def one_decimal(x: float) -> float:
+    return nearest_float(x, 0.1)
+
+
 def results_layout(
     riders: Riders,
     reference_metric: ReferenceMetric,
@@ -23,10 +39,11 @@ def results_layout(
     if reference_metric == ReferenceMetric.POWER:
         float_formatter = "{:.0f}".format
         power_unit = "Watts"
-
+        round_to_func = nearest_five
     else:
         float_formatter = "{:.1f}".format
         power_unit = "W/kg"
+        round_to_func = one_decimal
 
     ref_metric_name = reference_metric.name.lower()
     stats = riders.stats(ref_metric_name)
@@ -42,6 +59,7 @@ def results_layout(
         power_unit,
         stats["average"],
         stats["sec_average"],
+        round_to_func,
         cols[0],
     )
 
@@ -121,6 +139,7 @@ def _target_power(
     power_unit: str,
     average_power: float,
     second_average_power: float,
+    round_to_func: callable,
     st=st,
 ):
     st.header("Target Power")
@@ -131,12 +150,13 @@ def _target_power(
     # select only rows where rider number is less than or equal to the number of riders
     power_multipliers = power_multipliers[power_multipliers.index <= num_riders]
     s_power_max = average_power * power_multipliers
-    s_power_max = s_power_max.apply(lambda x: int(round(x / 5) * 5))
     s_power_max.name = f"Max ({power_unit})"
+    s_power_max = s_power_max.apply(round_to_func)
     s_power_max = s_power_max.apply(float_formatter)
+
     s_power_min = second_average_power * power_multipliers
-    s_power_min = s_power_min.apply(lambda x: int(round(x / 5) * 5))
     s_power_min.name = f"Min ({power_unit})"
+    s_power_min = s_power_min.apply(round_to_func)
     s_power_min = s_power_min.apply(float_formatter)
 
     df_power = pd.merge(
